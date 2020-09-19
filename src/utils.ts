@@ -1,14 +1,14 @@
 export const types = {
-  'boolean': 'boolean',
-  'number': 'number',
-  'string': 'string',
-  'function': 'function',
-  'array': 'array',
-  'date': 'date',
-  'regExp': 'regExp',
-  'undefined': 'undefined',
-  'null': 'null',
-  'object': 'object'
+  boolean: 'boolean',
+  number: 'number',
+  string: 'string',
+  function: 'function',
+  array: 'array',
+  date: 'date',
+  regExp: 'regExp',
+  undefined: 'undefined',
+  null: 'null',
+  object: 'object',
 }
 
 export const typeOf = (obj: any) => {
@@ -23,7 +23,7 @@ export const typeOf = (obj: any) => {
     '[object RegExp]': types['regExp'],
     '[object Undefined]': types['undefined'],
     '[object Null]': types['null'],
-    '[object Object]': types['object']
+    '[object Object]': types['object'],
   }
   return map[toString.call(obj)]
 }

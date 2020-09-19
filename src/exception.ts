@@ -12,15 +12,15 @@ export class ExceptionError extends Error {
   }
 }
 
-interface Options {
-  code: any,
+interface ErrorOptions {
+  code: any
   msg: any
 }
 
-type options = string | Options
+type Options = string | ErrorOptions
 
 // 表单验证错误异常
-export function error(options: options) {
+export function error(options: Options) {
   let code = 'ValidationError'
   let msg
   if (typeof options === 'object') {
