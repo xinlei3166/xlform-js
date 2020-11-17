@@ -8,6 +8,13 @@ export interface ErrorMessages {
   invalid?: string,
 }
 
+export interface Field {
+  js(value: any): any
+  validate(value: any): any
+  runValidators(value: any): any
+  clean(value: any): any
+}
+
 export interface BaseFieldOptions {
   required?: boolean
   includeEmptyObject?: boolean
@@ -54,4 +61,12 @@ export interface Validator {
   compare?(a: any, b: any): boolean
 
   clean?(value: any): any
+}
+
+export interface FormData {
+  [key: string]: any
+}
+
+export interface FormFields {
+  [key: string]: Field
 }

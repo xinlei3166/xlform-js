@@ -1,5 +1,6 @@
 import { Decimal } from 'decimal.js'
 import {
+  Field,
   BaseFieldOptions,
   CharFieldOptions,
   PhoneFieldOptions,
@@ -18,7 +19,7 @@ import { error } from './exception'
 import * as validators from './validators'
 import { typeOf, types } from './utils'
 
-export class BaseField {
+export class BaseField implements Field {
   defaultErrorMessages: ErrorMessages = { required: 'This field is required' }
   emptyValues = [undefined, null, '']
   defaultOptions = { required: true, errorMessages: {}, validators: [] }
@@ -221,7 +222,6 @@ export class IntegerField extends BaseField {
   defaultErrorMessages = { 'invalid': 'Enter a whole number' }
   minValue?: number
   maxValue?: number
-  reDecimal = /\.0*\s*$/
 
   /**
    * 整数字段
@@ -279,7 +279,6 @@ export class DecimalField extends IntegerField {
    * @param options
    * options.minValue: 最小数值
    * options.maxValue: 最大数值
-   * options.maxDigits: 数字允许的最大位数, 如果存在decimalPlaces, 此数字必须是大于decimalPlaces
    * options.maxDigits: 数字允许的最大位数, 如果存在decimalPlaces, 此数字必须是大于decimalPlaces
    * options.decimalPlaces: 小数位数
    * options.errorMessages: invalid、minValue、maxValue、decimal 数据不合法时抛出的error，如不填则抛出默认error
