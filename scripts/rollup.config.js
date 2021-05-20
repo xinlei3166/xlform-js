@@ -30,11 +30,11 @@ function simplifyTypescript(declaration = false) {
     tsconfigOverride: {
       compilerOptions: {
         module: 'esnext',
-        declaration: declaration,
-        declarationDir: './types',
-      },
+        declaration: declaration
+        // declarationDir: './dist/types',
+      }
     },
-    useTsconfigDeclarationDir: true,
+    useTsconfigDeclarationDir: true
   })
 }
 
@@ -48,7 +48,7 @@ function gen(options) {
     env: options.env,
     plugins: [node(), commonjs(), json()].concat(options.plugins || []),
     external,
-    banner,
+    banner
   }
 }
 
@@ -59,7 +59,7 @@ function gencjs(entry, dest) {
     dest,
     format: 'cjs',
     env: 'production',
-    plugins: [simplifyTypescript(true)],
+    plugins: [simplifyTypescript(true)]
   })
 }
 
@@ -69,7 +69,7 @@ function genes(entry, dest) {
     dest,
     format: 'es',
     env: 'production',
-    plugins: [simplifyTypescript()],
+    plugins: [simplifyTypescript()]
   })
 }
 
@@ -82,16 +82,16 @@ function genumd(entry, dest) {
     plugins: [
       babel({ babelHelpers: 'bundled', exclude: 'node_modules/**' }),
       terser(),
-      simplifyTypescript(),
+      simplifyTypescript()
     ],
-    sourcemap: true,
+    sourcemap: true
   })
 }
 
 const builds = {
   cjs: gencjs(entry, `dist/${moduleName}.cjs.js`),
   es: genes(entry, `dist/${moduleName}.es.js`),
-  umd: genumd(entry, `dist/${moduleName}.min.js`),
+  umd: genumd(entry, `dist/${moduleName}.min.js`)
 }
 
 function genConfig(format) {
@@ -105,13 +105,13 @@ function genConfig(format) {
       format: opts.format,
       exports: opts.exports ? opts.exports : 'auto',
       banner: opts.banner,
-      name: opts.moduleName || moduleName,
+      name: opts.moduleName || moduleName
     },
     onwarn: (msg, warn) => {
       if (!/Circular/.test(msg)) {
         warn(msg)
       }
-    },
+    }
   }
 
   const vars = {}
@@ -129,15 +129,15 @@ function genConfig(format) {
           arrow: true,
           dangerousForOf: true,
           asyncAwait: false,
-          generator: false,
-        },
+          generator: false
+        }
       })
     )
   }
 
   Object.defineProperty(config, '_format', {
     enumerable: false,
-    value: opts.format,
+    value: opts.format
   })
 
   return config
