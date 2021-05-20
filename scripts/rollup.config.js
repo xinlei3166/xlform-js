@@ -27,14 +27,14 @@ function simplifyTypescript(declaration = false) {
   return typescript({
     exclude: 'node_modules/**',
     typescript: require('typescript'),
+    useTsconfigDeclarationDir: true,
     tsconfigOverride: {
       compilerOptions: {
         module: 'esnext',
-        declaration: declaration
-        // declarationDir: './dist/types',
+        declaration: declaration,
+        declarationDir: './types'
       }
-    },
-    useTsconfigDeclarationDir: true
+    }
   })
 }
 
