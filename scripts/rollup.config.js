@@ -7,19 +7,19 @@ import json from '@rollup/plugin-json'
 import alias from '@rollup/plugin-alias'
 import replace from '@rollup/plugin-replace'
 import typescript from 'rollup-plugin-typescript2'
-import {terser} from 'rollup-plugin-terser'
+import { terser } from 'rollup-plugin-terser'
 
 const pkg = require('../package.json')
 const moduleName = pkg.name
 const version = process.env.VERSION || pkg.version
 const external = Object.keys(pkg.dependencies)
 const entry = 'src/index.ts'
-const resolve = dir => path.resolve(__dirname, '../', dir)
+const resolve = (dir) => path.resolve(__dirname, '../', dir)
 
 const banner =
   '/**\n' +
   ` * ${moduleName} v${version}\n` +
-  ` * (c) 2020-${new Date().getFullYear()} 君惜\n` +
+  ` * (c) 2021-${new Date().getFullYear()} 君惜\n` +
   ' * Released under the ISC License.\n' +
   ' */'
 
@@ -32,9 +32,9 @@ function simplifyTypescript(declaration = false) {
         module: 'esnext',
         declaration: declaration,
         declarationDir: './types',
-      }
+      },
     },
-    useTsconfigDeclarationDir: true
+    useTsconfigDeclarationDir: true,
   })
 }
 
@@ -48,35 +48,43 @@ function gen(options) {
     env: options.env,
     plugins: [node(), commonjs(), json()].concat(options.plugins || []),
     external,
-    banner
+    banner,
   }
 }
 
 function gencjs(entry, dest) {
   // return gen({entry, dest, format: 'cjs', env: 'production', exports: 'default'})
   return gen({
-    entry, dest, format: 'cjs', env: 'production', plugins: [
-      simplifyTypescript(true)
-    ]
+    entry,
+    dest,
+    format: 'cjs',
+    env: 'production',
+    plugins: [simplifyTypescript(true)],
   })
 }
 
 function genes(entry, dest) {
   return gen({
-    entry, dest, format: 'es', env: 'production', plugins: [
-      simplifyTypescript()
-    ]
+    entry,
+    dest,
+    format: 'es',
+    env: 'production',
+    plugins: [simplifyTypescript()],
   })
 }
 
 function genumd(entry, dest) {
   return gen({
-    entry, dest, format: 'umd', env: 'production', plugins: [
-      babel({babelHelpers: 'bundled', exclude: 'node_modules/**'}),
+    entry,
+    dest,
+    format: 'umd',
+    env: 'production',
+    plugins: [
+      babel({ babelHelpers: 'bundled', exclude: 'node_modules/**' }),
       terser(),
-      simplifyTypescript()
+      simplifyTypescript(),
     ],
-    sourcemap: true
+    sourcemap: true,
   })
 }
 
@@ -97,13 +105,13 @@ function genConfig(format) {
       format: opts.format,
       exports: opts.exports ? opts.exports : 'auto',
       banner: opts.banner,
-      name: opts.moduleName || moduleName
+      name: opts.moduleName || moduleName,
     },
     onwarn: (msg, warn) => {
       if (!/Circular/.test(msg)) {
         warn(msg)
       }
-    }
+    },
   }
 
   const vars = {}
@@ -114,20 +122,22 @@ function genConfig(format) {
   config.plugins.push(replace(vars))
 
   if (opts.transpile !== false) {
-    config.plugins.push(buble({
-      objectAssign: 'Object.assign',
-      transforms: {
-        arrow: true,
-        dangerousForOf: true,
-        asyncAwait: false,
-        generator: false
-      }
-    }))
+    config.plugins.push(
+      buble({
+        objectAssign: 'Object.assign',
+        transforms: {
+          arrow: true,
+          dangerousForOf: true,
+          asyncAwait: false,
+          generator: false,
+        },
+      })
+    )
   }
 
   Object.defineProperty(config, '_format', {
     enumerable: false,
-    value: opts.format
+    value: opts.format,
   })
 
   return config
