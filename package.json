@@ -31,6 +31,11 @@
     "deploy": "git push origin --tags && npm run build && npm publish",
     "preinstall": "node ./scripts/check-yarn.js"
   },
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
