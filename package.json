@@ -28,8 +28,7 @@
     "build:es": "rollup -c scripts/rollup.config.js --environment FORMAT:es",
     "build:umd": "rollup -c scripts/rollup.config.js --environment FORMAT:umd",
     "clean": "rm -rf dist",
-    "deploy": "git push origin --tags && npm run build && npm publish",
-    "preinstall": "node ./scripts/check-yarn.js"
+    "deploy": "git push origin --tags && npm run build && npm publish"
   },
   "files": [
     "dist",
