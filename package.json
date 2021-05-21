@@ -1,6 +1,6 @@
 {
   "name": "xlform",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "一个仿 django form 的表单验证库",
   "author": "junxi",
   "license": "ISC",
