@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "description": "一个仿 django form 的表单验证库",
   "author": "junxi",
-  "license": "ISC",
+  "license": "MIT",
   "main": "dist/xlform.cjs.js",
   "module": "dist/xlform.es.js",
   "types": "types/index.d.ts",
